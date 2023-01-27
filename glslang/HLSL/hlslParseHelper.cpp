@@ -6246,10 +6246,18 @@ void HlslParseContext::handleSemantic(TSourceLoc loc, TQualifier& qualifier, TBu
                 if (upperCase == "PSIZE") {
                     builtIn = EbvPointSize;
                 }
+                if (upperCase.compare(0, 5, "COLOR") == 0) {
+                    qualifier.precision = EpqLow;
+                }
             }
         } else if (language == EShLangFragment) {
-            if (qualifier.isParamInput() && upperCase == "VPOS") {
-                builtIn = EbvFragCoord;
+            if (qualifier.isParamInput()) {
+                if (upperCase == "VPOS") {
+                    builtIn = EbvFragCoord;
+                }
+                if (upperCase.compare(0, 5, "COLOR") == 0) {
+                    qualifier.precision = EpqLow;
+                }
             }
             if (qualifier.isParamOutput()) {
                 if (upperCase.compare(0, 5, "COLOR") == 0) {
